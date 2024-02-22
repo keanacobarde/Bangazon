@@ -11,8 +11,9 @@ namespace Bangazon
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        public BangazonDbContext(DbContextOptions<BangazonDbContext> context) : base(context)
-        { }
+        public BangazonDbContext(DbContextOptions<BangazonDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
