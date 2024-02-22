@@ -99,31 +99,6 @@ namespace Bangazon
                     CustomerId = 2,
                     PaymentId = 2,
                     IsOrderOpen = true,
-                    Products = new List<Product>
-                    {
-                        new Product
-                        {
-                            Id = 1,
-                            Title = "Laptop",
-                            Description = "Powerful laptop for all your computing needs",
-                            ImageUrl = "laptop_image_url.jpg",
-                            QuantityAvailable = 50,
-                            Price = 999.99f,
-                            SellerId = 101,
-                            CategoryId = 1,
-                        },
-                        new Product
-                        {
-                            Id = 2,
-                            Title = "Smartphone",
-                            Description = "High-performance smartphone with advanced features",
-                            ImageUrl = "smartphone_image_url.jpg",
-                            QuantityAvailable = 100,
-                            Price = 499.99f,
-                            SellerId = 102,
-                            CategoryId = 2,
-                        },
-                    }
                 },
 
                 new Order
@@ -132,42 +107,13 @@ namespace Bangazon
                     CustomerId = 2,
                     PaymentId = 3,
                     IsOrderOpen = true,
-                    Products = new List<Product>
-                   {
-                        new Product
-                        {
-                            Id = 3,
-                            Title = "Headphones",
-                            Description = "Premium noise-canceling headphones for an immersive audio experience",
-                            ImageUrl = "headphones_image_url.jpg",
-                            QuantityAvailable = 30,
-                            Price = 149.99f,
-                            SellerId = 103,
-                            CategoryId = 3,
-                        },
-                    }
                 },
-
                 new Order
                 {
                     Id = 3,
                     CustomerId = 2,
                     PaymentId = 1,
                     IsOrderOpen = false,
-                    Products = new List<Product>
-                {
-                        new Product
-                        {
-                            Id = 2,
-                            Title = "Smartphone",
-                            Description = "High-performance smartphone with advanced features",
-                            ImageUrl = "smartphone_image_url.jpg",
-                            QuantityAvailable = 100,
-                            Price = 499.99f,
-                            SellerId = 102,
-                            CategoryId = 2,
-                        },
-                }
                 }
             });
 
