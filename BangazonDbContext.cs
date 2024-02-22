@@ -63,7 +63,7 @@ namespace Bangazon
                     ImageUrl = "laptop_image_url.jpg",
                     QuantityAvailable = 50,
                     Price = 999.99f,
-                    SellerId = 101,
+                    SellerId = 1,
                     CategoryId = 1,
                 },
                 new Product
@@ -74,7 +74,7 @@ namespace Bangazon
                     ImageUrl = "smartphone_image_url.jpg",
                     QuantityAvailable = 100,
                     Price = 499.99f,
-                    SellerId = 102,
+                    SellerId = 2,
                     CategoryId = 2,
                 },
                 new Product
@@ -85,8 +85,8 @@ namespace Bangazon
                     ImageUrl = "headphones_image_url.jpg",
                     QuantityAvailable = 30,
                     Price = 149.99f,
-                    SellerId = 103,
-                    CategoryId = 3,
+                    SellerId = 1,
+                    CategoryId = 2,
                 }
             });
 
@@ -173,27 +173,45 @@ namespace Bangazon
             modelBuilder.Entity<PaymentType>().HasData(new PaymentType[]
             {
 
-            new PaymentType
+                new PaymentType
+                {
+                     Id = 1,
+                     Name = "Credit",
+                },
+
+
+                new PaymentType
+                {
+                    Id = 2,
+                    Name = "Debit Card",
+                },
+
+                new PaymentType
+                {
+                    Id = 3,
+                    Name = "Cryptocurrency",
+                },
+
+            });
+
+            modelBuilder.Entity<Category>().HasData(new Category[]
             {
-                 Id = 1,
-                 Name = "Credit Card",
-            },
-
-
-            new PaymentType
-            {
-                Id = 2,
-                Name = "Debit Card",
-            },
-
-            new PaymentType
-            {
-                Id = 3,
-                Name = "Cryptocurrency",
-            },
-
-        });
-
+                new Category
+                {
+                    Id = 1,
+                    Name = "Samsung",
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Apple",
+                },
+                new Category
+                {
+                    Id = 3,
+                    Name = "Sony",
+                },
+            });
            
         }
 

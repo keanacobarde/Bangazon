@@ -8,7 +8,7 @@ namespace Bangazon.Models
         [Required]
         public int CustomerId { get; set; }
         [Required]
-        public string PaymentId { get; set; }
+        public int PaymentId { get; set; }
         [Required]
         public bool IsOrderOpen { get; set; }
         [Required]
