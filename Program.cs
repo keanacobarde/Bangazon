@@ -2,6 +2,7 @@ using Bangazon;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
+using Bangazon.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,5 +34,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+Products.Map(app);
+Category.Map(app);
+PaymentType.Map(app);
 
 app.Run();
