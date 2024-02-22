@@ -36,5 +36,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 Products.Map(app);
+Category.Map(app);
+PaymentType.Map(app);
 
 app.Run();
