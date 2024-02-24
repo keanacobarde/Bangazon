@@ -1,4 +1,4 @@
-﻿namespace Bangazon.Models
+﻿namespace Bangazon.DTOs
 {
     public class addProductDTO
     {

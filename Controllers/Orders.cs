@@ -1,5 +1,7 @@
-﻿using Bangazon.Models;
+﻿using Bangazon.DTOs;
+using Bangazon.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace Bangazon.Controllers
 {
@@ -28,7 +30,22 @@ namespace Bangazon.Controllers
                 return Results.Ok(db.Orders);
             });
 
-            // CREATING AN ORDER
+            // EDITING AN ORDER
+            app.MapPut("/orders/{id}/edit", (BangazonDbContext db, int id, Order orderUpdateInfo) =>
+            {
+                Order orderToUpdate = db.Orders.SingleOrDefault(o => o.Id == id);
+                if (orderToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+                orderToUpdate.PaymentId = orderUpdateInfo.PaymentId;
+                orderToUpdate.IsOrderOpen = orderUpdateInfo.IsOrderOpen;
+
+                db.SaveChanges();
+                return Results.NoContent();
+            });
+
+            // CREATING AN ORDER THEN, ADDING PRODUCTS
             app.MapPost("/orders", (BangazonDbContext db, Order newOrder) =>
             {
                 try
@@ -65,6 +82,27 @@ namespace Bangazon.Controllers
                 db.SaveChanges();
 
                 return Results.Created($"/orders/addProduct", newProduct);
+            });
+
+            //DELETE PRODUCTS FROM ORDERS
+            app.MapDelete("/orders/{id}/products/{prodId}", (BangazonDbContext db, int id, int prodId) => 
+            {
+                var order = db.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == id);
+                if (order == null)
+                {
+                    return Results.NotFound("Order not found.");
+                }
+
+                var product = db.Products.Find(prodId);
+
+                if (product == null)
+                {
+                    return Results.NotFound();
+                }
+
+                order.Products.Remove(product);
+                db.SaveChanges();
+                return Results.Ok();
             });
 
         }
