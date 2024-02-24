@@ -2,7 +2,7 @@
 
 namespace Bangazon.Controllers
 {
-    public class ORDERS
+    public class Orders
     {
         public static void Map(WebApplication app)
         {
@@ -24,6 +24,9 @@ namespace Bangazon.Controllers
                 db.SaveChanges();
                 return Results.Ok(db.Orders);
             });
+
+            // CREATING AN ORDER
+
         }
     }
 }
