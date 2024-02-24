@@ -1,4 +1,5 @@
 ﻿using Bangazon.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bangazon.Controllers
 {
@@ -9,11 +10,13 @@ namespace Bangazon.Controllers
             // GETTING ALL ORDERS
             app.MapGet("/orders", (BangazonDbContext db) => 
             { 
-                return db.Orders.ToList();
+                return db.Orders
+                .Include(orders => orders.Products)
+                .ToList();
             });
 
             // GETTING ALL ORDERS GIVEN AN ID, DELETING ORDERS
-            app.MapGet("/orders/{id}", (BangazonDbContext db, int id) =>
+            app.MapDelete("/orders/{id}", (BangazonDbContext db, int id) =>
             {
                 Order selectedOrder = db.Orders.FirstOrDefault(p => p.Id == id);
                 if (selectedOrder == null)
@@ -26,6 +29,19 @@ namespace Bangazon.Controllers
             });
 
             // CREATING AN ORDER
+            app.MapPost("/orders", (BangazonDbContext db, Order newOrder) =>
+            {
+                try
+                {
+                    db.Orders.Add(newOrder);
+                    db.SaveChanges();
+                    return Results.Created($"/api/reservations/{newOrder.Id}", newOrder);
+                }
+                catch (DbUpdateException)
+                {
+                    return Results.BadRequest("Invalid data submitted");
+                }
+            });
 
         }
     }

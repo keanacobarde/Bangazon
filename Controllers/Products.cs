@@ -24,7 +24,7 @@ namespace Bangazon.Controllers
             });
 
             // GETTING ALL PRODUCTS GIVEN AN ID, DELETING PRODUCTS
-            app.MapGet("/products/{id}", (BangazonDbContext db, int id) =>
+            app.MapDelete("/products/{id}", (BangazonDbContext db, int id) =>
             {
                 Product selectedProduct = db.Products.FirstOrDefault(p => p.Id == id);
                 if (selectedProduct == null)
