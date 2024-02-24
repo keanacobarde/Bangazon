@@ -22,6 +22,19 @@ namespace Bangazon.Controllers
                 }
                 return Results.Ok(selectedProduct);
             });
+
+            // GETTING ALL PRODUCTS GIVEN AN ID, DELETING PRODUCTS
+            app.MapGet("/products/{id}", (BangazonDbContext db, int id) =>
+            {
+                Product selectedProduct = db.Products.FirstOrDefault(p => p.Id == id);
+                if (selectedProduct == null)
+                {
+                    return Results.NotFound();
+                }
+                db.Products.Remove(selectedProduct);
+                db.SaveChanges();
+                return Results.Ok(db.Products);
+            });
         }
     };
 }
