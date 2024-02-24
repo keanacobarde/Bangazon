@@ -1,4 +1,5 @@
 ﻿using Bangazon.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bangazon.Controllers
 {
@@ -24,7 +25,7 @@ namespace Bangazon.Controllers
             });
 
             // GETTING ALL PRODUCTS GIVEN AN ID, DELETING PRODUCTS
-            app.MapGet("/products/{id}", (BangazonDbContext db, int id) =>
+            app.MapDelete("/products/{id}", (BangazonDbContext db, int id) =>
             {
                 Product selectedProduct = db.Products.FirstOrDefault(p => p.Id == id);
                 if (selectedProduct == null)
@@ -34,6 +35,21 @@ namespace Bangazon.Controllers
                 db.Products.Remove(selectedProduct);
                 db.SaveChanges();
                 return Results.Ok(db.Products);
+            });
+
+            // CREATING PRODUCTS
+            app.MapPost("/products", (BangazonDbContext db, Product newProduct) =>
+            {
+                try
+                {
+                    db.Products.Add(newProduct);
+                    db.SaveChanges();
+                    return Results.Created($"/products/{newProduct.Id}", newProduct);
+                }
+                catch (DbUpdateException)
+                {
+                    return Results.BadRequest("Invalid data submitted");
+                }
             });
         }
     };

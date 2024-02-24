@@ -39,5 +39,6 @@ Products.Map(app);
 Category.Map(app);
 PaymentType.Map(app);
 Users.Map(app);
+Orders.Map(app);
 
 app.Run();
