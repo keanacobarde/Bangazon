@@ -35,6 +35,24 @@ namespace Bangazon.Controllers
                     return Results.BadRequest("Invalid data submitted");
                 }
             });
+
+            // EDITING A USER
+            app.MapPut("/user/{id}/edit", (BangazonDbContext db, int id, User updateUserInfo) =>
+            {
+                User userToUpdate = db.Users.SingleOrDefault(u => u.Id == id);
+                if (userToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+                userToUpdate.FirstName = updateUserInfo.FirstName;
+                userToUpdate.LastName = updateUserInfo.LastName;
+                userToUpdate.Email = updateUserInfo.Email;
+                userToUpdate.Address = updateUserInfo.Address;
+                userToUpdate.IsSeller = updateUserInfo.IsSeller;
+
+                db.SaveChanges();
+                return Results.NoContent();
+            });
         }
     }
 }
