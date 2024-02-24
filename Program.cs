@@ -38,5 +38,6 @@ app.UseHttpsRedirection();
 Products.Map(app);
 Category.Map(app);
 PaymentType.Map(app);
+Users.Map(app);
 
 app.Run();
