@@ -43,6 +43,30 @@ namespace Bangazon.Controllers
                 }
             });
 
+            //ADDING PRODUCTS
+            app.MapPost("/orders/addProduct", (BangazonDbContext db, addProductDTO newProduct) =>
+            {
+                var order = db.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == newProduct.OrderId);
+
+                if (order == null)
+                {
+                    return Results.NotFound("Order not found.");
+                }
+
+                var product = db.Products.Find(newProduct.ProductId);
+
+                if (product == null)
+                {
+                    return Results.NotFound("Product not found.");
+                }
+
+                order.Products.Add(product);
+
+                db.SaveChanges();
+
+                return Results.Created($"/orders/addProduct", newProduct);
+            });
+
         }
     }
 }
