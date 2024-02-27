@@ -4,7 +4,6 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using Bangazon.Controllers;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +37,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

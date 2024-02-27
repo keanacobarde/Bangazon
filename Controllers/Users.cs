@@ -22,6 +22,16 @@ namespace Bangazon.Controllers
                 return Results.Ok(selectedUser);
             });
 
+            // FIND USER
+            app.MapGet("/checkuser/{uid}", (BangazonDbContext db, string uid) => {
+                User selectedUser = db.Users.FirstOrDefault(u => u.Uid == uid);
+                if (selectedUser == null)
+                {
+                    return Results.NotFound();
+                }
+                return Results.Ok();
+            });
+
             // CREATING A USER
             app.MapPost("/register", (BangazonDbContext db, User newUser) =>
             {
