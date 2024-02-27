@@ -12,6 +12,7 @@ namespace Bangazon.Controllers
                 return db.Users.ToList();
             });
 
+            // FIND SINGLE USER W/ DETAILS
             app.MapGet("/users/{uid}", (BangazonDbContext db, string uid) => {
                 User selectedUser = db.Users.FirstOrDefault(u => u.Uid == uid);
                 if (selectedUser == null)
@@ -21,18 +22,36 @@ namespace Bangazon.Controllers
                 return Results.Ok(selectedUser);
             });
 
+            // FIND USER
+            app.MapGet("/checkuser/{uid}", (BangazonDbContext db, string uid) => {
+                User selectedUser = db.Users.FirstOrDefault(u => u.Uid == uid);
+                if (selectedUser == null)
+                {
+                    return Results.NotFound();
+                }
+                return Results.Ok();
+            });
+
             // CREATING A USER
             app.MapPost("/register", (BangazonDbContext db, User newUser) =>
             {
-                try
+                User checkUser = db.Users.FirstOrDefault(u => u.Uid == newUser.Uid);
+                if (checkUser != null)
                 {
-                    db.Users.Add(newUser);
-                    db.SaveChanges();
-                    return Results.Created($"/users/{newUser.Id}", newUser);
+                    try
+                    {
+                        db.Users.Add(newUser);
+                        db.SaveChanges();
+                        return Results.Created($"/users/{newUser.Id}", newUser);
+                    }
+                    catch (DbUpdateException)
+                    {
+                        return Results.BadRequest("Invalid data submitted");
+                    }
                 }
-                catch (DbUpdateException)
-                {
-                    return Results.BadRequest("Invalid data submitted");
+                else
+                { 
+                    return Results.Conflict("User already exists");
                 }
             });
 
