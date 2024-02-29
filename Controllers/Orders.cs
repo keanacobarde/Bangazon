@@ -10,11 +10,21 @@ namespace Bangazon.Controllers
         public static void Map(WebApplication app)
         {
             // GETTING ALL ORDERS
-            app.MapGet("/orders", (BangazonDbContext db) => 
-            { 
+            app.MapGet("/orders", (BangazonDbContext db) =>
+            {
                 return db.Orders
                 .Include(orders => orders.Products)
                 .ToList();
+            });
+
+            //GETTING A USER'S ORDER BY UID
+            app.MapGet("/cart/{uid}", (BangazonDbContext db, string uid) =>
+            {
+                User userForCart = db.Users.FirstOrDefault(u => u.Uid == uid);
+                int userId = userForCart.Id;
+                var cart = db.Orders.Where(o => o.CustomerId == userId)
+                    .Include(order => order.Products);
+                return cart;
             });
 
             // GETTING ALL ORDERS GIVEN AN ID, DELETING ORDERS
