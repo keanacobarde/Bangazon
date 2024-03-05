@@ -112,7 +112,7 @@ namespace Bangazon.Controllers
 
                 order.Products.Remove(product);
                 db.SaveChanges();
-                return Results.Ok();
+                return Results.Ok(order);
             });
 
         }
